@@ -78,8 +78,10 @@ class Level0File:
                 save_file_name = self._generate_burst_cache_filename(burst)
                 try:
                     self._burst_data_dict[burst] = np.load(save_file_name)
-                finally:
-                    return self.get_burst_data(burst, try_load_from_file = False)
+                except FileNotFoundError:
+                    print("File not found")
+                #finally:
+                #    return self.get_burst_data(burst, try_load_from_file = False)
             else:
                 self._burst_data_dict[burst] = self._decoder.decode_packets(self.get_burst_metadata(burst))
 
